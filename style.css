@@ -1,0 +1,23 @@
+.container {
+    background-color: rgb(242, 242, 250);
+    width: 300px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.form {
+    margin-bottom: 20px;
+}
+
+#platform-assignment {
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+.ABOUT {
+    background-color: rgb(164, 90, 0);
+    width: 200px;
+    margin: 0 auto;
+    text-align: center;
+
+}
