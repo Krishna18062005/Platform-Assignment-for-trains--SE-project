@@ -3,16 +3,17 @@ import { motion } from "framer-motion";
 import "tailwindcss/tailwind.css";
 
 const App: React.FC = () => {
- const [progress] = useState(60); // Progress for achievements (example)
+ 
 
   return (
     <div className="bg-gray-900 text-white font-sans">
       <HeroSection />
       <FeaturesSection />
-      <AchievementSection progress={progress} />
+      <UseCasesSection />
       <TestimonialsSection />
       <PricingSection />
       <SignupSection />
+      <AboutUsSection />
       <ContactUsSection />
       <Footer />
     </div>
@@ -26,6 +27,9 @@ const HeroSection: React.FC = () => (
     animate={{ opacity: 1 }}
     transition={{ duration: 1 }}
   >
+    {/* Gradient Background */}
+    <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 opacity-90"></div>
+
     {/* Floating Stars */}
     <motion.div
       className="absolute top-10 right-10 text-yellow-400 text-6xl opacity-70 animate-spin-slow"
@@ -40,59 +44,96 @@ const HeroSection: React.FC = () => (
 
     <div className="max-w-6xl mx-auto text-center relative z-10">
       <h1 className="text-5xl md:text-7xl font-extrabold mb-4 drop-shadow-lg">
-      Empowering Your Sales, Simplifying Your Workflows.
+        Empowering Your Sales, Simplifying Your Workflows.
       </h1>
       <p className="text-xl md:text-2xl mb-8 drop-shadow-md">
         Unlock achievements, track progress, and level up your tasks.
       </p>
-      <div className="space-x-4">
+      <div className="space-x-4 mb-8">
         <MotionButton className="bg-purple-700" text="Start Quest" />
         <MotionButton className="bg-purple-700" text="Learn More" />
+      </div>
+
+      {/* Video Placeholder (Embedded Video) */}
+      <div className="relative w-full max-w-4xl mx-auto mb-8">
+        <div className="absolute inset-0 bg-gray-900 opacity-60 rounded-lg"></div>
+        <div className="relative z-10">
+          <div className="w-full max-w-3/4 mx-auto">
+            <iframe
+              className="w-full h-96 rounded-lg"
+              src="https://www.youtube.com/embed/yZVOGGr-aYo?si=xXsjD4p0v8JjKiru"
+              title="Billzzy Explainer"
+              frameBorder="0"
+              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          </div>
+          
+        </div>
       </div>
     </div>
   </motion.section>
 );
 
+
+
 const FeaturesSection: React.FC = () => (
   <motion.section
-    className="py-16 px-6 bg-gray-800"
+    className="py-16 px-6 bg-gray-800 text-white"
     initial={{ x: "-100vw" }}
     animate={{ x: 0 }}
     transition={{ type: "spring", stiffness: 50 }}
   >
     <div className="max-w-6xl mx-auto text-center">
       <h2 className="text-3xl md:text-5xl font-extrabold mb-12 text-white">Features & Benefits</h2>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {[
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {[  
           {
             name: "Automated Address Entry",
             icon: "📍",
-            description: "Streamline address input with automation.",
+            description: "Streamline address input with automation, eliminating manual data entry errors.",
+            benefit: "Saves time and reduces human error in entering addresses.",
           },
           {
             name: "Automatic Amount Confirmation",
             icon: "✅",
-            description: "Eliminate errors with automated amount checks.",
+            description: "Automatically confirm transaction amounts to prevent discrepancies and errors.",
+            benefit: "Ensures accurate billing, reducing the risk of financial errors.",
           },
           {
             name: "Order Confirmation Automation",
             icon: "📦",
-            description: "Quickly confirm orders without manual effort.",
+            description: "Quickly confirm orders without manual intervention, keeping the process efficient.",
+            benefit: "Speeds up the order confirmation process, enhancing customer satisfaction.",
+          },
+          {
+            name: "Label Printing",
+            icon: "🖨️",
+            description: "Automatically generate and print shipping labels for your orders.",
+            benefit: "Eliminates the need for manual label creation, streamlining order fulfillment.",
+          },
+          {
+            name: "Packing & Tracking Automation",
+            icon: "📦🔍",
+            description: "Automate the packing process and track shipments in real time.",
+            benefit: "Improves order accuracy and visibility, enhancing operational efficiency.",
+          },
+          {
+            name: "Mobile Order Management",
+            icon: "📱",
+            description: "Manage and process orders directly from your mobile device.",
+            benefit: "Increases flexibility, allowing businesses to manage operations on the go.",
           },
         ].map((feature, index) => (
           <motion.div
             key={index}
-            whileHover={{ scale: 1.1, rotate: 5 }}
-            className="bg-white text-gray-900 rounded-lg shadow-lg p-6 relative overflow-hidden"
+            whileHover={{ scale: 1.05 }}
+            className="bg-gray-700 text-white p-6 rounded-lg shadow-lg border border-yellow-500"
           >
-            <motion.div
-              className="absolute top-0 left-0 bg-gradient-to-br from-blue-500 to-purple-500 w-full h-full opacity-10"
-              animate={{ rotate: 360 }}
-              transition={{ duration: 15, repeat: Infinity }}
-            ></motion.div>
             <div className="text-4xl mb-4">{feature.icon}</div>
             <h3 className="text-xl font-semibold mb-2">{feature.name}</h3>
             <p>{feature.description}</p>
+            <p className="mt-4 text-gray-400 italic">{feature.benefit}</p>
           </motion.div>
         ))}
       </div>
@@ -100,55 +141,94 @@ const FeaturesSection: React.FC = () => (
   </motion.section>
 );
 
-const AchievementSection: React.FC<{ progress: number }> = ({ progress }) => (
+const AboutUsSection: React.FC = () => (
   <motion.section
-    className="py-16 px-6 bg-gradient-to-t from-gray-800 to-gray-700"
+    className="bg-gray-900 text-white py-16 px-6"
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
     transition={{ duration: 1 }}
   >
     <div className="max-w-6xl mx-auto text-center">
-      <h2 className="text-3xl md:text-5xl font-extrabold mb-12 text-yellow-300">
-        Achievements & Progress
-      </h2>
-      <div className="relative bg-gray-800 rounded-lg shadow-lg p-6 text-left">
-        <h3 className="text-xl font-bold mb-4 text-white">Current Progress</h3>
-        <div className="mb-6">
-          <div className="bg-gray-600 w-full rounded-full h-6">
-            <motion.div
-              className="bg-yellow-400 h-6 rounded-full text-center text-sm font-bold text-gray-900"
-              style={{ width: `${progress}%` }}
-              initial={{ width: "0%" }}
-              animate={{ width: `${progress}%` }}
-              transition={{ duration: 2 }}
-            >
-              {progress}%
-            </motion.div>
-          </div>
+      <h2 className="text-3xl md:text-5xl font-extrabold mb-12 text-yellow-300">About Us</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="text-left">
+          <h3 className="text-2xl font-semibold mb-4">Who We Are</h3>
+          <p className="mb-4">
+            We are a passionate team committed to creating innovative solutions that simplify workflows and increase productivity. 
+            Billzzy was designed with businesses in mind, bringing automation to day-to-day operations.
+          </p>
+          <p className="mb-4">
+            Our team consists of software engineers, designers, and business strategists, all working together to create a game-changing tool.
+          </p>
         </div>
-        <div className="grid grid-cols-3 gap-4">
-          {[
-            { name: "First Milestone", icon: "🎯", unlocked: true },
-            { name: "Automation Pro", icon: "⚙️", unlocked: progress > 50 },
-            { name: "Order Guru", icon: "📦", unlocked: progress > 75 },
-          ].map((achievement, index) => (
-            <motion.div
-              key={index}
-              whileHover={{ scale: 1.1 }}
-              className={`p-4 rounded-lg shadow-lg ${
-                achievement.unlocked ? "bg-green-500 text-white" : "bg-gray-600 text-gray-400"
-              }`}
-            >
-              <div className="text-3xl mb-2">{achievement.icon}</div>
-              <h4 className="text-lg font-semibold">{achievement.name}</h4>
-              {!achievement.unlocked && <p className="text-sm">Locked</p>}
-            </motion.div>
-          ))}
+        <div className="flex flex-col justify-center">
+          <h3 className="text-2xl font-semibold mb-4">Our Mission</h3>
+          <p className="mb-4">
+            Our mission is to empower businesses of all sizes with intuitive tools that automate complex tasks, allowing companies to focus on growth and innovation.
+          </p>
+          <div className="space-y-4">
+            <div className="flex items-center space-x-4">
+              <span className="text-3xl">🚀</span>
+              <span>Innovation-driven approach</span>
+            </div>
+            <div className="flex items-center space-x-4">
+              <span className="text-3xl">💡</span>
+              <span>Solutions tailored to businesses</span>
+            </div>
+            <div className="flex items-center space-x-4">
+              <span className="text-3xl">🤝</span>
+              <span>Customer-first philosophy</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </motion.section>
 );
+
+const UseCasesSection: React.FC = () => (
+  <motion.section
+    className="py-16 px-6 bg-gray-800 text-white"
+    initial={{ x: "-100vw" }}
+    animate={{ x: 0 }}
+    transition={{ type: "spring", stiffness: 50 }}
+  >
+    <div className="max-w-6xl mx-auto text-center">
+      <h2 className="text-3xl md:text-5xl font-extrabold mb-12 text-white">Use Cases</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {[  
+          {
+            title: "Retail",
+            icon: "🏬",
+            description: "Billzzy streamlines order processing and payment tracking for retail businesses.",
+          },
+          {
+            title: "Wholesale",
+            icon: "📦",
+            description: "Billzzy helps wholesalers automate bulk orders and manage inventory seamlessly.",
+          },
+          {
+            title: "Local Services",
+            icon: "🏠",
+            description: "Local service providers use Billzzy to confirm services and handle payments efficiently.",
+          },
+        ].map((useCase, index) => (
+          <motion.div
+            key={index}
+            whileHover={{ scale: 1.05 }}
+            className="bg-gray-700 text-white p-6 rounded-lg shadow-lg border border-yellow-500"
+          >
+            <div className="text-4xl mb-4">{useCase.icon}</div>
+            <h3 className="text-xl font-semibold mb-2">{useCase.title}</h3>
+            <p>{useCase.description}</p>
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  </motion.section>
+);
+
+
 
 const TestimonialsSection: React.FC = () => (
   <motion.section
@@ -159,30 +239,46 @@ const TestimonialsSection: React.FC = () => (
   >
     <div className="max-w-6xl mx-auto text-center">
       <h2 className="text-3xl md:text-5xl font-extrabold mb-12 text-yellow-300">Customer Stories</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {[
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        {[  
           {
             quote: "Billzzy transformed how we handle orders! It's a game changer.",
             name: "Krishna K",
+            icon: "👨‍💻",
           },
           {
             quote: "Our workflow has never been smoother. Highly recommend!",
-            name: "Rashika Mandi",
+            name: "Mirudhula",
+            icon: "🌟",
+          },
+          {
+            quote: "Incredible automation! Saves us so much time and effort.",
+            name: "Swetha",
+            icon: "🚀",
+          },
+          {
+            quote: "A must-have tool for streamlining operations and improving efficiency.",
+            name: "Shaisha",
+            icon: "💼",
           },
         ].map((testimonial, index) => (
           <motion.div
             key={index}
             whileHover={{ scale: 1.05 }}
-            className="bg-gray-800 rounded-lg shadow-lg p-6 border border-yellow-500"
+            className="bg-gray-800 rounded-lg shadow-lg p-6 border border-yellow-500 hover:shadow-2xl transition-all"
           >
+            <div className="flex justify-center items-center mb-4">
+              <div className="text-4xl text-yellow-500 mr-2">{testimonial.icon}</div>
+              <h4 className="text-lg font-semibold text-yellow-300">{testimonial.name}</h4>
+            </div>
             <p className="italic mb-4 text-white">"{testimonial.quote}"</p>
-            <h4 className="text-lg font-semibold text-yellow-300">- {testimonial.name}</h4>
           </motion.div>
         ))}
       </div>
     </div>
   </motion.section>
 );
+
 
 const PricingSection: React.FC = () => (
   <motion.section
