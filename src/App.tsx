@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React,{useState} from "react";
 import { motion } from "framer-motion";
 import "tailwindcss/tailwind.css";
 
@@ -7,29 +7,97 @@ const App: React.FC = () => {
 
   return (
     <div className="bg-gray-900 text-white font-sans">
+      <Navbar/>
       <HeroSection />
+      <DemoVideoSection/>
       <FeaturesSection />
       <UseCasesSection />
       <TestimonialsSection />
-      <PricingSection />
-      <SignupSection />
+      <PricingSection />     
       <AboutUsSection />
-      <ContactUsSection />
       <Footer />
     </div>
   );
 };
 
+const Navbar: React.FC = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
+  return (
+    <nav className="bg-gray-800 text-white fixed w-full top-0 z-50 shadow-md">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 flex items-center justify-between h-16">
+        {/* Logo */}
+        <div className="flex items-center">
+          <img
+            src="https://techvaseegrah.com/wp-content/uploads/2023/05/New-Project-3-copykjbh.png" // Replace with your logo image
+            alt="Logo"
+            className="h-20 w-50"
+          />
+           </div>
+
+        {/* Desktop Links */}
+        <div className="hidden md:flex space-x-6">
+          {["Home", "Features", "Pricing", "About", "Contact"].map((link, index) => (
+            <a
+              key={index}
+              href={`#${link.toLowerCase()}`}
+              className="text-sm font-semibold hover:text-yellow-400 transition-all"
+            >
+              {link}
+            </a>
+          ))}
+        </div>
+
+        {/* Hamburger Menu for Mobile */}
+        <div className="md:hidden">
+          <button
+            onClick={toggleMenu}
+            className="text-2xl focus:outline-none hover:text-yellow-400 transition-all"
+          >
+            {isOpen ? "✖" : "☰"}
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile Menu */}
+      {isOpen && (
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3 }}
+          className="md:hidden bg-gray-700 text-center py-4 space-y-4"
+        >
+          {["Home", "Features", "Pricing", "About", "Contact"].map((link, index) => (
+            <a
+              key={index}
+              href={`#${link.toLowerCase()}`}
+              className="block text-sm font-semibold hover:text-yellow-400 transition-all"
+            >
+              {link}
+            </a>
+          ))}
+        </motion.div>
+      )}
+    </nav>
+  );
+};
+<div className="relative">
+  <div className="absolute top-0 left-0 animate-float bg-blue-500 w-12 h-12 rounded-full"></div>
+</div>
+
+
 const HeroSection: React.FC = () => (
-  <motion.section
-    className="bg-gradient-to-r from-indigo-600 to-purple-700 text-white py-20 px-6 relative overflow-hidden"
+  <motion.section id='home'
+  
+    className="relative bg-gradient-to-r from-blue-600 via-blue-500 to-blue-400 py-32 px-6 text-white pt-16"
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
     transition={{ duration: 1 }}
   >
-    {/* Gradient Background */}
-    <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 opacity-90"></div>
-
     {/* Floating Stars */}
     <motion.div
       className="absolute top-10 right-10 text-yellow-400 text-6xl opacity-70 animate-spin-slow"
@@ -41,35 +109,28 @@ const HeroSection: React.FC = () => (
     >
       🌟
     </motion.div>
-
-    <div className="max-w-6xl mx-auto text-center relative z-10">
-      <h1 className="text-5xl md:text-7xl font-extrabold mb-4 drop-shadow-lg">
-        Empowering Your Sales, Simplifying Your Workflows.
+    <div className="max-w-7xl mx-auto text-center">
+      {/* Title and Subtitle */}
+      <h1 className="text-4xl md:text-5xl font-extrabold leading-tight mb-6">
+      Empowering Your Sales, Simplifying Your Workflows.
       </h1>
-      <p className="text-xl md:text-2xl mb-8 drop-shadow-md">
-        Unlock achievements, track progress, and level up your tasks.
-      </p>
+      <p className="text-lg md:text-xl mb-8">
+      Unlock achievements, track progress, and level up your tasks.
+         </p>
+
+      {/* Call-to-Action Button */}
       <div className="space-x-4 mb-8">
         <MotionButton className="bg-purple-700" text="Start Quest" />
         <MotionButton className="bg-purple-700" text="Learn More" />
+        
       </div>
-
-      {/* Video Placeholder (Embedded Video) */}
-      <div className="relative w-full max-w-4xl mx-auto mb-8">
-        <div className="absolute inset-0 bg-gray-900 opacity-60 rounded-lg"></div>
-        <div className="relative z-10">
-          <div className="w-full max-w-3/4 mx-auto">
-            <iframe
-              className="w-full h-96 rounded-lg"
-              src="https://www.youtube.com/embed/yZVOGGr-aYo?si=xXsjD4p0v8JjKiru"
-              title="Billzzy Explainer"
-              frameBorder="0"
-              allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
-          </div>
-          
-        </div>
+      {/* Clipart Image */}
+      <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-10">
+        <img
+          src="clipimg.jpg" 
+          alt="Hero Clipart"
+          className="w-20 md:w-25 lg:w-50"
+        />
       </div>
     </div>
   </motion.section>
@@ -77,17 +138,20 @@ const HeroSection: React.FC = () => (
 
 
 
+
 const FeaturesSection: React.FC = () => (
-  <motion.section
-    className="py-16 px-6 bg-gray-800 text-white"
-    initial={{ x: "-100vw" }}
-    animate={{ x: 0 }}
-    transition={{ type: "spring", stiffness: 50 }}
+  <motion.section id='features'
+    className="py-16 px-6 bg-gradient-to-r from-blue-500 to-indigo-600 text-white"
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    transition={{ duration: 1 }}
   >
-    <div className="max-w-6xl mx-auto text-center">
-      <h2 className="text-3xl md:text-5xl font-extrabold mb-12 text-white">Features & Benefits</h2>
+    <div className="max-w-7xl mx-auto text-center">
+      <h2 className="text-3xl md:text-5xl font-extrabold mb-12 text-yellow-300">
+        Features & Benefits
+      </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {[  
+        {[
           {
             name: "Automated Address Entry",
             icon: "📍",
@@ -128,12 +192,14 @@ const FeaturesSection: React.FC = () => (
           <motion.div
             key={index}
             whileHover={{ scale: 1.05 }}
-            className="bg-gray-700 text-white p-6 rounded-lg shadow-lg border border-yellow-500"
+            className="bg-gray-800 text-white p-8 rounded-lg shadow-lg hover:shadow-xl transition-all ease-in-out duration-300"
           >
-            <div className="text-4xl mb-4">{feature.icon}</div>
-            <h3 className="text-xl font-semibold mb-2">{feature.name}</h3>
-            <p>{feature.description}</p>
-            <p className="mt-4 text-gray-400 italic">{feature.benefit}</p>
+            <div className="text-4xl mb-6">{feature.icon}</div>
+            <h3 className="text-2xl font-semibold mb-4 text-yellow-400">{feature.name}</h3>
+            <p className="mb-4">{feature.description}</p>
+            <div className="bg-yellow-400 p-4 rounded-md shadow-inner mt-6 text-gray-900">
+              <p className="text-lg italic">{feature.benefit}</p>
+            </div>
           </motion.div>
         ))}
       </div>
@@ -141,8 +207,64 @@ const FeaturesSection: React.FC = () => (
   </motion.section>
 );
 
-const AboutUsSection: React.FC = () => (
+const DemoVideoSection: React.FC = () => (
   <motion.section
+    className="py-16 px-6 bg-gray-900 text-white"
+    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    transition={{ duration: 1 }}
+  >
+    <div className="max-w-7xl mx-auto text-center">
+      <h2 className="text-3xl md:text-5xl font-extrabold mb-12 text-yellow-400">
+        Watch Our Demo Video
+      </h2>
+
+      <div className="relative">
+        {/* Video Player */}
+        <video
+          id="demoVideo"
+          className="w-full h-auto rounded-lg"
+          controls
+          preload="auto"
+          muted
+          poster="thumbnail.png" 
+        >
+          <source src="sample.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+
+        {/* Play/Pause Button */}
+        <div className="absolute inset-0 flex justify-center items-center">
+          <button
+            id="playPauseBtn"
+            className="text-4xl text-white bg-transparent p-4 rounded-full transition-all ease-in-out duration-300 hover:bg-yellow-400"
+            onClick={() => togglePlayPause()}
+          >
+            ▶️
+          </button>
+        </div>
+      </div>
+    </div>
+  </motion.section>
+);
+
+// Function to handle play/pause button interaction
+const togglePlayPause = () => {
+  const video = document.getElementById('demoVideo') as HTMLVideoElement;
+  const playPauseBtn = document.getElementById('playPauseBtn');
+
+  if (video.paused) {
+    video.play();
+    playPauseBtn!.innerHTML = '❚❚'; // Change to pause icon
+  } else {
+    video.pause();
+    playPauseBtn!.innerHTML = '▶️'; // Change to play icon
+  }
+};
+
+
+const AboutUsSection: React.FC = () => (
+  <motion.section id='about'
     className="bg-gray-900 text-white py-16 px-6"
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
@@ -186,15 +308,20 @@ const AboutUsSection: React.FC = () => (
   </motion.section>
 );
 
+
+
+
+
+
 const UseCasesSection: React.FC = () => (
   <motion.section
-    className="py-16 px-6 bg-gray-800 text-white"
+    className="py-16 px-6 bg-gradient-to-r from-green-700 to-blue-800 text-white"
     initial={{ x: "-100vw" }}
     animate={{ x: 0 }}
     transition={{ type: "spring", stiffness: 50 }}
   >
     <div className="max-w-6xl mx-auto text-center">
-      <h2 className="text-3xl md:text-5xl font-extrabold mb-12 text-white">Use Cases</h2>
+      <h2 className="text-3xl md:text-5xl font-extrabold mb-12 text-yellow-300">Use Cases</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {[  
           {
@@ -228,11 +355,9 @@ const UseCasesSection: React.FC = () => (
   </motion.section>
 );
 
-
-
 const TestimonialsSection: React.FC = () => (
   <motion.section
-    className="bg-gray-900 py-16 px-6"
+    className="bg-gradient-to-r from-purple-700 to-blue-600 py-16 px-6"
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
     transition={{ duration: 1 }}
@@ -243,12 +368,12 @@ const TestimonialsSection: React.FC = () => (
         {[  
           {
             quote: "Billzzy transformed how we handle orders! It's a game changer.",
-            name: "Krishna K",
+            name: "Krishna",
             icon: "👨‍💻",
           },
           {
             quote: "Our workflow has never been smoother. Highly recommend!",
-            name: "Mirudhula",
+            name: "Subhiksha",
             icon: "🌟",
           },
           {
@@ -279,10 +404,9 @@ const TestimonialsSection: React.FC = () => (
   </motion.section>
 );
 
-
 const PricingSection: React.FC = () => (
-  <motion.section
-    className="bg-gray-900 text-white py-16 px-6"
+  <motion.section id='pricing'
+    className="bg-gradient-to-r from-yellow-500 to-red-500 text-white py-16 px-6"
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
     transition={{ duration: 1 }}
@@ -290,7 +414,7 @@ const PricingSection: React.FC = () => (
     <div className="max-w-6xl mx-auto text-center">
       <h2 className="text-3xl md:text-5xl font-extrabold mb-12">Pricing Plans</h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {[
+        {[  
           {
             title: "Basic",
             price: "$10/month",
@@ -332,9 +456,14 @@ const PricingSection: React.FC = () => (
   </motion.section>
 );
 
+
+
+
+
+
 const SignupSection: React.FC = () => (
-  <motion.section
-    className="bg-gradient-to-r from-blue-500 to-purple-700 py-16 px-6 text-white"
+  <motion.section id='contact'
+    className="bg-gradient-to-r from-gray-500 to-purple-700 py-16 px-6 text-white"
     initial={{ opacity: 0 }}
     animate={{ opacity: 1 }}
     transition={{ duration: 1 }}
@@ -361,69 +490,7 @@ const SignupSection: React.FC = () => (
   </motion.section>
 );
 
-const ContactUsSection: React.FC = () => (
-  <motion.section
-    className="bg-gray-800 py-16 px-6 text-white"
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    transition={{ duration: 1 }}
-  >
-    <div className="max-w-6xl mx-auto">
-      <h2 className="text-3xl md:text-5xl font-extrabold mb-8 text-center">Contact Us</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div>
-          <h3 className="text-xl font-bold mb-4">Get in Touch</h3>
-          <p className="mb-4">
-            Have questions? We’d love to hear from you. Fill out the form or contact us directly.
-          </p>
-          <p className="font-bold">Email: techvaseegrah@gmail.com</p>
-          <p className="font-bold">Phone: +91 85240 89733</p>
-        </div>
-        <form className="bg-gray-700 p-6 rounded-lg shadow-lg">
-          <div className="mb-4">
-            <label htmlFor="name" className="block text-sm font-bold mb-2">
-              Name
-            </label>
-            <input
-              id="name"
-              type="text"
-              placeholder="Your Name"
-              className="w-full px-4 py-2 rounded-lg text-gray-900"
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="email" className="block text-sm font-bold mb-2">
-              Email
-            </label>
-            <input
-              id="email"
-              type="email"
-              placeholder="Your Email"
-              className="w-full px-4 py-2 rounded-lg text-gray-900"
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="message" className="block text-sm font-bold mb-2">
-              Message
-            </label>
-            <textarea
-              id="message"
-              rows={4}
-              placeholder="Your Message"
-              className="w-full px-4 py-2 rounded-lg text-gray-900"
-            ></textarea>
-          </div>
-          <motion.button
-            whileHover={{ scale: 1.1 }}
-            className="w-full px-6 py-3 bg-yellow-500 text-gray-900 font-bold rounded-lg shadow-lg"
-          >
-            Submit
-          </motion.button>
-        </form>
-      </div>
-    </div>
-  </motion.section>
-);
+
 
 
 const MotionButton: React.FC<{ className: string; text: string }> = ({ className, text }) => (
@@ -439,8 +506,9 @@ const MotionButton: React.FC<{ className: string; text: string }> = ({ className
 );
 
 const Footer: React.FC = () => (
-  <footer className="bg-gray-800 text-white py-8 text-center">
-    <p>Developed by Krishna K</p>
+  <footer className="bg-gradient-to-r from-gray-500 to-purple-700 py-16 px-6 text-white py-8 text-center">
+     <SignupSection />
+    
     <p>&copy; {new Date().getFullYear()} Techvaseegrah. All Rights Reserved.</p>
   </footer>
 );
